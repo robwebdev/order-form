@@ -3376,6 +3376,10 @@ inquirer@^0.12.0:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
+install@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/install/-/install-0.10.1.tgz#1c7b53c8dd7335ef534c2648de28f599df1bdd97"
+
 interpret@^0.6.4:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-0.6.6.tgz#fecd7a18e7ce5ca6abfb953e1f86213a49f1625b"
@@ -4421,6 +4425,10 @@ minimist@~0.0.1:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mockdate@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-2.0.2.tgz#5ae0c0eaf8fe23e009cd01f9889b42c4f634af12"
 
 moment@2.x.x:
   version "2.19.1"
