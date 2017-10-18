@@ -1,12 +1,19 @@
-import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM } from "../actions/ActionTypes";
+import {
+  ADD_ITEM,
+  ORDER_REF_BLURRED,
+  REMOVE_ITEM,
+  SUBMIT,
+  UPDATE_ITEM,
+  UPDATE_ORDER_REF
+} from "../actions/ActionTypes";
 
 const initialState = {
-  orderReference: null,
-  items: []
+  orderReference: ""
 };
 
 export default function rootReducer(state = initialState, action) {
   let nextState = { ...state };
+
   switch (action.type) {
     case ADD_ITEM:
       nextState.items = insertItem(
@@ -14,9 +21,12 @@ export default function rootReducer(state = initialState, action) {
         createNewItem(nextState.items.length)
       );
       break;
+
     case REMOVE_ITEM:
       nextState.items = removeItem(nextState.items, action.index);
+      nextState.items = updateOrderNumber(nextState.items);
       break;
+
     case UPDATE_ITEM:
       nextState.items = updateItem(
         nextState.items,
@@ -24,12 +34,34 @@ export default function rootReducer(state = initialState, action) {
         action.update
       );
       break;
+
+    case UPDATE_ORDER_REF:
+      nextState.orderReference = action.orderReference;
+      if (nextState.orderReference) {
+        delete nextState.orderReferenceError;
+      }
+      break;
+
+    case ORDER_REF_BLURRED:
+      if (!nextState.orderReference) {
+        nextState.orderReferenceError = "Required";
+      }
+      break;
+
+    case SUBMIT:
+      if (!nextState.orderReference) {
+        nextState.orderReferenceError = "Required";
+      }
+      break;
+
     default:
       const today = new Date();
       const date = today.toLocaleDateString();
-      nextState = { ...nextState, date };
+      const items = [createNewItem(0)];
+      nextState = { ...nextState, ...initialState, date, items };
       break;
   }
+
   nextState.grandTotal = calculateGrandTotal(nextState.items);
   return nextState;
 }
@@ -52,6 +84,12 @@ function removeItem(array, index) {
   return [...array.slice(0, index), ...array.slice(index + 1)];
 }
 
+function updateOrderNumber(array) {
+  return array.map((item, index) => {
+    return { ...item, itemNo: index + 1 };
+  });
+}
+
 function updateItem(array, updateIndex, updateValues) {
   return array.map((item, index) => {
     if (index !== updateIndex) {
@@ -63,12 +101,24 @@ function updateItem(array, updateIndex, updateValues) {
       ...updateValues
     };
 
-    updatedItem.pricePerItem = parseFloat(updatedItem.pricePerItem);
-    updatedItem.quantity = parseFloat(updatedItem.quantity);
-    updatedItem.totalPrice = updatedItem.pricePerItem * updatedItem.quantity;
+    updatedItem.pricePerItem = safeParseFloat(updatedItem.pricePerItem);
+    updatedItem.quantity = safeParseFloat(updatedItem.quantity);
 
+    if (updatedItem.pricePerItem && updatedItem.quantity) {
+      updatedItem.totalPrice = updatedItem.pricePerItem * updatedItem.quantity;
+    } else {
+      updatedItem.totalPrice = 0;
+    }
     return updatedItem;
   });
+}
+
+function safeParseFloat(string) {
+  const parsed = parseFloat(string);
+  if (!isNaN(parsed)) {
+    return parsed;
+  }
+  return string;
 }
 
 function calculateGrandTotal(items = []) {

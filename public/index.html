@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <style>
     html {
@@ -7,21 +8,22 @@
       width: 100vw;
       display: flex;
     }
-
+    
     body {
       height: 100%;
       width: 100%;
     }
-
+    
     #root {
       height: inherit;
       width: inherit;
       align-items: center;
-      justify-content: center;
+      justify-content: stretch;
+      flex-direction: column;
       display: flex;
       flex: 1;
     }
-
+    
     [data-reactroot] {
       height: inherit;
       width: inherit;
@@ -42,9 +44,10 @@
   -->
   <title>React Native Everywhere</title>
 </head>
+
 <body>
-<div id="root"></div>
-<!--
+  <div id="root"></div>
+  <!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.
 
@@ -55,4 +58,5 @@
   To create a production bundle, use `npm run build`.
 -->
 </body>
+
 </html>
