@@ -1,22 +1,16 @@
-import React from 'react';
-import {Provider} from "react-redux";
-import store from "./utilities/storage/store";
-import TopLevelComponent from './screens/EntryScreen';
-import Routing, {Router} from './utilities/routing';
-
-const Route = Routing.Route;
-
+import { Provider } from "react-redux";
+import React from "react";
+import TopLevelComponent from "./screens/EntryScreen";
+import store from "./store";
 
 class App extends React.Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <Router>
-                    <Route path='/' component={TopLevelComponent}/>
-                </Router>
-            </Provider>
-        );
-    }
+  render() {
+    return (
+      <Provider store={store}>
+        <TopLevelComponent />
+      </Provider>
+    );
+  }
 }
 
 export default App;
