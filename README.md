@@ -5,8 +5,9 @@
 ![Desktop Chrome Order Form](3.png "Desktop Chrome Order Form")
 
 TODO:
-- [ ] Replace `<Button>` with `<TouchableOpacity>` for better cross platform styling
 - [ ] Add accessibilty props to Form
+- [ ] Style readonly inputs to differentiate from editable inputs
+- [ ] Replace `<Button>` with `<TouchableOpacity>` for better cross platform styling
 - [ ] Add an async action to better simulate a form submission
 
 ## Run the project on a specific platform:
